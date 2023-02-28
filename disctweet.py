@@ -1,12 +1,22 @@
-import discord
-import tweepy
-import time
+import subprocess
+import sys
+try:
+    import discord
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "discord"])
+    import discord
+try:
+    import tweepy
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "tweepy"])
+    import tweepy
+import asyncio
 import os
 
-# Hämta sökvägen till mappen där skriptet körs
+# Get the path to the directory where the script is running
 dir_path = os.path.dirname(os.path.abspath(__file__))
 
-# Läs in tokens från tokens.txt filen
+# Read tokens from the tokens.txt file
 with open(os.path.join(dir_path, 'tokens.txt'), 'r') as f:
     TOKEN = f.readline().strip()
     API_KEY = f.readline().strip()
@@ -14,33 +24,33 @@ with open(os.path.join(dir_path, 'tokens.txt'), 'r') as f:
     ACCESS_TOKEN = f.readline().strip()
     ACCESS_TOKEN_SECRET = f.readline().strip()
 
-# Läs in channel_ids från users.txt filen
+# Read channel_ids from the users.txt file
 CHANNEL_IDS = {}
 with open(os.path.join(dir_path, 'users.txt'), 'r') as f:
     for line in f:
         user, channel_id = line.strip().split(':')
         CHANNEL_IDS[user] = int(channel_id)
 
-# Läs in användarna som ska bevakas från users.txt filen
+# Read the users to be monitored from the users.txt file
 USERS_TO_TRACK = []
 with open(os.path.join(dir_path, 'users.txt'), 'r') as f:
     for line in f:
         user, channel_id = line.strip().split(':')
         USERS_TO_TRACK.append(user)
 
-# Skapa en autentisering för Twitter API
+# Create an authentication for Twitter API
 auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-# Skapa en Tweepy API-klient
+# Create a Tweepy API client
 api = tweepy.API(auth)
 
-# Skapa en Discord-klient
+# Create a Discord client
 client = discord.Client(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():
-    print('Bot är ansluten till Discord')
+    print('The bot is connected to Discord')
     latest_tweets = {user: None for user in USERS_TO_TRACK}
     while True:
         for user in USERS_TO_TRACK:
@@ -56,7 +66,7 @@ async def on_ready():
                     if channel:
                         tweet_url = 'https://twitter.com/{}/status/{}'.format(user, latest_tweet.id)
                         await channel.send("\u200B\n" + tweet_url)
-        time.sleep(60)
+        await asyncio.sleep(60)
 
-# Kör klienten med hjälp av token
+# Run the client using the token
 client.run(TOKEN)
