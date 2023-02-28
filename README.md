@@ -15,7 +15,9 @@ To use Disctweet, follow these steps:
 The `users.txt` file should be formatted as follows:
 
 username1:channel_id1
+
 username2:channel_id2
+
 username3:channel_id3
 
 ## tokens.txt Format
@@ -23,9 +25,13 @@ username3:channel_id3
 The `tokens.txt` file should be formatted as follows:
 
 DISCORD_BOT_TOKEN
+
 TWITTER_API_KEY
+
 TWITTER_API_SECRET_KEY
+
 TWITTER_ACCESS_TOKEN
+
 TWITTER_ACCESS_TOKEN_SECRET
 
 Make sure to replace each token with your own values.
