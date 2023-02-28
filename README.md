@@ -7,7 +7,7 @@ Disctweet is a Python script that monitors Twitter accounts and sends new tweets
 To use Disctweet, follow these steps:
 
 1. Fill in the necessary tokens in the `tokens.txt` file in the following order: Discord bot token, Twitter API key, Twitter API secret key, Twitter access token, and Twitter access token secret.
-2. In the `users.txt` file, add the users you want to monitor in the following format: `username:channel_id`. For example, `realDonaldTrump:123456789`.
+2. In the `users.txt` file, add the users you want to monitor in the following format: `username:channel_id`. For example, `vrilya:123456789`.
 3. Run the Python script by typing `python disctweet.py` in the terminal.
 
 ## users.txt Format
