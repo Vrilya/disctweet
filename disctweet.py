@@ -55,8 +55,11 @@ async def on_ready():
     while True:
         for user in USERS_TO_TRACK:
             if latest_tweets[user] is None:
-                latest_tweet = api.user_timeline(screen_name=user, count=1, include_rts=False, exclude_replies=True)[0]
-                latest_tweets[user] = latest_tweet
+                try:
+                    latest_tweet = api.user_timeline(screen_name=user, count=1, include_rts=False, exclude_replies=True)[0]
+                    latest_tweets[user] = latest_tweet
+                except IndexError:
+                    print(f"No tweets found for {user}")
             else:
                 latest_tweet = api.user_timeline(screen_name=user, count=1, since_id=latest_tweets[user].id, include_rts=False, exclude_replies=True)
                 if len(latest_tweet) > 0:
