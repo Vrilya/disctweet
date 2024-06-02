@@ -1,3 +1,5 @@
+!!! This doesn't work anymore !!!
+
 # Disctweet
 
 Disctweet is a Python script that monitors Twitter accounts and sends new tweets to designated Discord channels.
